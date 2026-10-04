@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For Abang</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      background: #18232e;
+      color: #d5e0e7;
+      overflow-x: hidden;
+    }
+
+    /* ---------- OPENING ---------- */
+    .opening {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 30px 24px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(30,44,57,.92), transparent 30%),
+        linear-gradient(160deg, #172532 0%, #1b2935 48%, #101820 100%);
+    }
+
+    .opening::before,
+    .opening::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,.45);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .opening::before {
+      width: 180px;
+      height: 180px;
+      top: -60px;
+      left: -60px;
+    }
+
+    .opening::after {
+      width: 240px;
+      height: 240px;
+      right: -100px;
+      bottom: -90px;
+      animation-delay: 1.5s;
+    }
+
+    .opening-content {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      animation: fadeUp 1.4s ease both;
+    }
+
+    .small-label {
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      color: #8398a9;
+      margin-bottom: 22px;
+    }
+
+    .opening h1 {
+      font-size: clamp(40px, 12vw, 76px);
+      line-height: 1.05;
+      color: #b9c9d6;
+      margin-bottom: 24px;
+      font-weight: 600;
+    }
+
+    .opening p {
+      font-size: 18px;
+      line-height: 1.8;
+      color: #9aaab8;
+      margin-bottom: 35px;
+    }
+
+    .start-btn {
+      border: none;
+      background: #7896ad;
+      color: white;
+      padding: 15px 28px;
+      border-radius: 40px;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(75,94,110,.18);
+      transition: .3s;
+    }
+
+    .start-btn:hover {
+      transform: translateY(-3px);
+      background: #8eabbf;
+    }
+
+    /* ---------- MUSIC ---------- */
+    .music-btn {
+      position: fixed;
+      z-index: 50;
+      right: 18px;
+      top: 18px;
+      width: 46px;
+      height: 46px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(30,44,57,.92);
+      color: #7896ad;
+      box-shadow: 0 5px 20px rgba(0,0,0,.25);
+      cursor: pointer;
+      font-size: 18px;
+      display: none;
+    }
+
+    .music-btn.show {
+      display: block;
+    }
+
+    /* ---------- GENERAL ---------- */
+    section {
+      padding: 90px 22px;
+      position: relative;
+    }
+
+    .section-inner {
+      max-width: 850px;
+      margin: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      color: #b9c9d6;
+      font-size: clamp(28px, 7vw, 45px);
+      margin-bottom: 18px;
+      font-weight: 600;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: #718493;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 45px;
+    }
+
+    .story-text {
+      font-size: 17px;
+      line-height: 2;
+      color: #9aaab7;
+      text-align: center;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .story-text strong {
+      color: #b9c9d6;
+    }
+
+    /* ---------- ROBLOX GALLERY ---------- */
+    .roblox-section {
+      background: #111a22;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 13px;
+      margin-top: 45px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      border-radius: 18px;
+      display: block;
+      box-shadow: 0 8px 25px rgba(0,0,0,.22);
+      transition: transform .35s ease;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.025);
+    }
+
+    .gallery .wide {
+      grid-column: span 2;
+      height: 240px;
+    }
+
+    /* ---------- PERSON CARDS ---------- */
+    .person-section {
+      background: linear-gradient(180deg, #202d39, #111a22);
+    }
+
+    .person-card {
+      max-width: 430px;
+      margin: 40px auto 0;
+      text-align: center;
+    }
+
+    .person-card img {
+      width: min(100%, 330px);
+      height: 390px;
+      object-fit: cover;
+      border-radius: 28px;
+      box-shadow: 0 18px 45px rgba(0,0,0,.25);
+    }
+
+    .person-caption {
+      margin-top: 25px;
+      font-size: 15px;
+      line-height: 1.8;
+      color: #8f9eaa;
+    }
+
+    /* ---------- QUOTE ---------- */
+    .quote-section {
+      background: #9eb4c4;
+      color: white;
+      text-align: center;
+    }
+
+    .quote-section .section-title {
+      color: white;
+    }
+
+    .quote {
+      max-width: 700px;
+      margin: auto;
+      font-size: clamp(22px, 5vw, 32px);
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    /* ---------- LETTER ---------- */
+    .letter-section {
+      background: #fff;
+    }
+
+    .letter {
+      max-width: 700px;
+      margin: auto;
+      background: #18232e;
+      padding: 35px 25px;
+      border-radius: 25px;
+      box-shadow: 0 12px 35px rgba(0,0,0,.18);
+    }
+
+    .letter p {
+      font-size: 16px;
+      line-height: 2;
+      color: #9aa9b5;
+      margin-bottom: 22px;
+    }
+
+    .letter p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ---------- ENDING ---------- */
+    .ending {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background:
+        radial-gradient(circle at 50% 20%, rgba(30,44,57,.92), transparent 28%),
+        linear-gradient(150deg, #172532, #18232e 60%, #101820);
+      padding: 70px 22px;
+    }
+
+    .ending-content {
+      max-width: 700px;
+    }
+
+    .ending img {
+      width: min(100%, 390px);
+      max-height: 430px;
+      object-fit: cover;
+      border-radius: 28px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.25);
+      margin-bottom: 35px;
+    }
+
+    .ending h2 {
+      color: #b9c9d6;
+      font-size: clamp(30px, 8vw, 50px);
+      margin-bottom: 25px;
+    }
+
+    .ending p {
+      color: #9aaab7;
+      font-size: 17px;
+      line-height: 2;
+    }
+
+    .signature {
+      margin-top: 35px;
+      color: #7896ad;
+      font-size: 16px;
+      font-style: italic;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      background: #18232e;
+      color: #657784;
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    /* ---------- ANIMATION ---------- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(35px);
+      transition: opacity .9s ease, transform .9s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-18px); }
+    }
+
+    @media (max-width: 500px) {
+      section {
+        padding: 75px 18px;
+      }
+
+      .opening p {
+        font-size: 16px;
+      }
+
+      .gallery img {
+        height: 145px;
+      }
+
+      .gallery .wide {
+        height: 190px;
+      }
+
+      .person-card img {
+        height: 350px;
+      }
+
+      .letter {
+        padding: 28px 20px;
+      }
+
+      .letter p {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- MUSIK -->
+  <!-- Ganti "lagu.mp3" dengan nama file lagu kamu -->
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <button class="music-btn" id="musicBtn" onclick="toggleMusic()">♫</button>
+
+  <!-- OPENING -->
+  <section class="opening" id="home">
+    <div class="opening-content">
+      <div class="small-label">A little story for you</div>
+
+      <h1>Untuk Abang</h1>
+
+      <p>
+        Ada satu cerita kecil yang pengen ade ceritain.
+        Bukan tentang bagaimana semuanya berakhir sempurna,
+        tapi tentang seseorang yang awalnya nggak pernah ade sangka
+        akan menjadi sepenting itu.
+      </p>
+
+      <button class="start-btn" onclick="startStory()">
+        Mulai ceritanya →
+      </button>
+    </div>
+  </section>
+
+
+  <!-- ROBLOX -->
+  <section class="roblox-section">
+    <div class="section-inner reveal">
+
+      <div class="section-subtitle">01</div>
+      <h2 class="section-title">It started with Roblox</h2>
+
+      <p class="story-text">
+        Kalau dipikir-pikir, lucu juga ya...
+        dari sekian banyak orang yang bisa ade temui di dunia maya,
+        ade malah dipertemukan sama abang lewat sesuatu sesederhana itu, dan itu adalah di Roblox.
+        <br><br>
+
+        Awalnya mungkin nggak ada yang spesial.
+        Cuma main bareng, ngobrol, bercanda, saling ganggu,
+        lalu perlahan jadi terbiasa dengan keberadaan satu sama lain.
+        <br><br>
+
+        Sampai akhirnya, tanpa sadar,
+        <strong>ade mulai senang setiap kali ada abang.</strong>
+      </p>
+
+      <div class="gallery">
+        <!-- GANTI NAMA FILE DI BAWAH SESUAI FOTO KAMU -->
+        <img src="foto1.jpeg" alt="Kenangan Roblox">
+        <img src="foto3.jpeg" alt="Kenangan Roblox">
+        <img src="foto4.jpeg" alt="Kenangan Roblox">
+        <img src="foto5.jpeg" alt="Kenangan Roblox">
+        <img class="wide" src="foto6.jpeg" alt="Kenangan Roblox">
+        <img class="wide" src="foto7.jpeg" alt="Kenangan Roblox">
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ABANG -->
+  <section class="person-section">
+    <div class="section-inner reveal">
+
+      <div class="section-subtitle">02</div>
+      <h2 class="section-title">Then you became my abang?</h2>
+
+      <p class="story-text">
+        Entah kapan tepatnya, hubungan kita berubah menjadi sesuatu
+        yang ade kenal sebagai abang dan adik.
+        <br><br>
+
+        Dan ade nyaman dengan itu.
+        abang uda jadi abang yang bisa ade ganggu,
+        ade ajak bercanda, ade ceritain banyak hal,
+        bahkan kadang jadi orang yang tanpa sadar ade cari keberadaannya.
+        <br><br>
+
+        Mungkin buat abang, ade cuma adik kecil yang suka bikin ribut.
+        Tapi buat ade, abang pernah menjadi salah satu orang
+        yang kehadirannya benar-benar berarti.
+      </p>
+
+      <div class="person-card">
+        <!-- FOTO ABANG -->
+        <img src="abang.jpeg" alt="Foto abang">
+        <div class="person-caption">
+          Mungkin buat abang ini cuma sebuah foto.
+          Tapi buat adek, ada cerita di baliknya. 🤍
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- FEELINGS -->
+  <section>
+    <div class="section-inner reveal">
+
+      <div class="section-subtitle">03</div>
+      <h2 class="section-title">Somewhere along the way... 🌷</h2>
+
+      <p class="story-text">
+        Tapi ternyata, rasa nyaman itu perlahan berubah.
+        <br><br>
+
+        Ade nggak tahu kapan tepatnya.
+        Ade juga nggak pernah benar-benar merencanakannya.
+        Tiba-tiba ade sadar kalau ade bukan cuma nyaman sebagai adik.
+        <br><br>
+
+        <strong>Ade suka sama abang.</strong>
+        <br><br>
+
+        Dan mungkin itu terdengar sederhana,
+        tapi buat ade nggak sesederhana itu.
+        Karena setelah sekian lama ade memilih sendiri
+        dan nggak membiarkan siapa pun masuk terlalu jauh,
+        ternyata abang adalah orang pertama yang berhasil
+        membuat ade merasakan itu lagi.
+      </p>
+
+      <div class="person-card">
+        <!-- FOTO KAMU -->
+        <img src="aku.jpeg" alt="Foto aku">
+        <div class="person-caption">
+          Setelah sekian lama... ternyata hati ade masih bisa merasakan
+          hal seperti itu lagi.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- CONFESSION -->
+  <section class="quote-section">
+    <div class="section-inner reveal">
+
+      <div class="section-subtitle" style="color:#9fb0bd;">Chapter 04</div>
+
+      <h2 class="section-title">You already knew.</h2>
+
+      <div class="quote">
+        “Ade suka sama abang.
+        Dan abang tahu itu.
+        Mungkin, untuk pertama kalinya setelah lama,
+        ade berani membiarkan seseorang tahu apa yang ada di hati ade.”
+      </div>
+
+      <p class="story-text" style="color:#c4d0d9; margin-top:35px;">
+        Abang bahkan membiarkan ade menjadi sedikit "cegil",
+        membiarkan ade mengganggu, menyukai,
+        dan menunjukkan perasaan ade dengan cara ade sendiri.
+        <br><br>
+
+        Dan untuk itu, ade benar-benar berterima kasih.
+        Tapi mungkin justru karena itu juga,
+        ade akhirnya sadar...
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- REALIZATION -->
+  <section>
+    <div class="section-inner reveal">
+
+      <div class="section-subtitle">05</div>
+      <h2 class="section-title">Maybe I put my heart in the wrong place</h2>
+
+      <div class="letter">
+
+        <p>
+          Ade sempat berpikir, mungkin kalau ade terus dekat,
+          terus bercanda, terus menunjukkan rasa suka,
+          suatu hari nanti semuanya bisa berubah.
+        </p>
+
+        <p>
+          Tapi semakin ade pikirkan, semakin ade sadar...
+          mungkin bukan abang yang salah.
+        </p>
+
+        <p>
+          Bukan juga ade yang salah karena pernah suka.
+        </p>
+
+        <p>
+          <strong>
+            Ade cuma menaruh harapan di tempat yang ternyata
+            tidak bisa membalasnya.
+          </strong>
+        </p>
+
+        <p>
+          Dan itu nggak apa-apa.
+          Nggak semua perasaan harus berakhir dengan memiliki seseorang.
+          Kadang kita cuma perlu mengakui bahwa kita pernah benar-benar
+          menyukai seseorang, lalu belajar melepaskannya ketika waktunya tiba.
+        </p>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- THANK YOU -->
+  <section class="person-section">
+    <div class="section-inner reveal">
+
+      <div class="section-subtitle">06</div>
+      <h2 class="section-title">Thank you🌻</h2>
+
+      <div class="letter">
+
+        <p>
+          Jadi sebelum ade benar-benar belajar untuk berhenti berharap,
+          ada satu hal yang paling ingin ade bilang:
+        </p>
+
+        <p>
+          <strong>Terima kasih</strong>
+        </p>
+
+        <p>
+          Terima kasih sudah hadir di hidup dde,
+          meskipun awalnya cuma dari sebuah game.
+        </p>
+
+        <p>
+          Terima kasih untuk semua obrolan, candaan,
+          waktu yang kita habiskan bareng,
+          dan semua hal kecil yang mungkin buat abang biasa saja,
+          tapi pernah berarti banyak buat dde
+        </p>
+
+        <p>
+          Terima kasih juga karena tanpa abang sadari,
+          abang pernah membuat ade percaya kalau ternyata setelah
+          dua tahun sendiri, hati ade masih bisa menyukai seseorang lagi.
+        </p>
+
+        <p>
+          Dan walaupun pada akhirnya perasaan itu
+          nggak menemukan tempat yang sama di hatimu...
+          <strong>ade tetap nggak menyesal pernah merasakannya.</strong>
+        </p>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- LETTING GO -->
+  <section>
+    <div class="section-inner reveal">
+
+      <div class="section-subtitle">07</div>
+      <h2 class="section-title">Letting go</h2>
+
+      <div class="letter">
+
+        <p>
+          Sekarang ade rasa ade sudah cukup lama tinggal di perasaan ini.
+        </p>
+
+        <p>
+          Jadi kali ini, ade mau belajar pergi sedikit demi sedikit.
+        </p>
+
+        <p>
+          Bukan pergi dari hidup abang.
+          Bukan berhenti menjadi adik abang.
+          Dan bukan berarti semua rasa sayang yang pernah ada
+          tiba-tiba hilang.
+        </p>
+
+        <p>
+          Ade cuma mau berhenti menunggu sesuatu
+          yang mungkin memang nggak akan datang.
+        </p>
+
+        <p>
+          Ade mau tetap bisa bercanda sama abang
+          tanpa diam-diam berharap lebih.
+        </p>
+
+        <p>
+          Tetap bisa memanggilmu abang tanpa berharap
+          suatu hari abang melihat dde dengan cara yang berbeda.
+        </p>
+
+        <p>
+          <strong>
+            Ade mau menyayangimu sebagai abang,
+            tanpa lagi meminta hati ade untuk menunggu.
+          </strong>
+        </p>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ENDING -->
+  <section class="ending">
+    <div class="ending-content reveal">
+
+      <!-- FOTO ROBLOX BERDUA -->
+      <img src="foto22.jpeg" alt="Kenangan kita">
+
+      <h2>Thank you, Bang Dap🤍</h2>
+
+      <p>
+        Jadi, kalau suatu hari nanti ade sudah nggak se-cegil dulu...
+        <br>
+        kalau ade sudah nggak terlalu sering mengganggu...
+        <br>
+        kalau ade sudah bisa bercanda sama abang
+        tanpa menyimpan harapan lain di belakangnya...
+      </p>
+
+      <br>
+
+      <p>
+        Jangan berpikir kalau ade pernah menyesal mengenal abang.
+        Dde justru bersyukur pernah bertemu dengan abang.
+      </p>
+
+      <br>
+
+      <p>
+        Dari Roblox yang awalnya cuma permainan,
+        sampai akhirnya abang menjadi seseorang yang pernah
+        menempati bagian kecil tapi berarti di hati dde.
+      </p>
+
+      <br>
+
+      <p>
+        <strong>
+          Terima kasih ya, Bang.
+        </strong>
+        <br>
+        Terima kasih sudah pernah menjadi seseorang yang ade suka.
+        <br><br>
+        Dan sekarang...
+        <br><br>
+        <strong>
+          biarin ade belajar menyimpan rasa itu
+          sebagai sebuah cerita yang indah,
+          bukan lagi sebagai sebuah harapan.
+        </strong>
+      </p>
+
+      <div class="signature">
+        — dari dde zara, yang pernah jadi cegilnya abang. 🤍
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    dibuat dengan sedikit cerita, banyak kenangan, dan hati yang sedang belajar 🤍
+  </footer>
+
+
+  <script>
+    const music = document.getElementById("bgMusic");
+    const musicBtn = document.getElementById("musicBtn");
+
+    function startStory() {
+      document.querySelector(".roblox-section").scrollIntoView({
+        behavior: "smooth"
+      });
+
+      musicBtn.classList.add("show");
+
+      music.play().catch(() => {
+        // Browser HP bisa memblokir autoplay.
+        // Musik tetap bisa dinyalakan lewat tombol ♫.
+      });
+    }
+
+    function toggleMusic() {
+      if (music.paused) {
+        music.play();
+        musicBtn.innerHTML = "♫";
+      } else {
+        music.pause();
+        musicBtn.innerHTML = "🔇";
+      }
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+        }
+      });
+    }, {
+      threshold: 0.12
+    });
+
+    document.querySelectorAll(".reveal").forEach((element) => {
+      observer.observe(element);
+    });
+  </script>
+
+</body>
+</html>
